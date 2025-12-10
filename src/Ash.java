@@ -1,7 +1,9 @@
-public class Ash extends Champion {
+public class Ash extends Champion implements RangedChampion {
 
     public Ash(String name, int level, int attackDamage, int defense, int hp, int mp) {
         super(name, level, attackDamage, defense, hp, mp);
+
+        setCriticalChance(30);
     }
 
     @Override
@@ -40,4 +42,8 @@ public class Ash extends Champion {
         System.out.println("애쉬 공격력 +3, 마나 20 증가!");
     }
 
+    @Override
+    public void rangedAttack() {
+        System.out.println(getName() + "이(가) 뒷점멸 공격!");
+    }
 }

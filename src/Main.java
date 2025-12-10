@@ -29,5 +29,14 @@ public class Main {
 
         ash.useE(garen);
         ash.basicAttack(garen);
+
+        Garen garen1 = new Garen("가렌", 1, 35, 10, 200, 50);
+        Ash ash1 = new Ash("애쉬", 1, 20, 5, 150, 70);
+
+        garen1.meleeAttack();
+        garen1.upDefense();
+
+        ash1.rangedAttack();
+
     }
 }

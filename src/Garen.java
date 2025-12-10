@@ -1,8 +1,12 @@
-public class Garen extends Champion {
+public class Garen extends Champion implements MeleeChampion, TankChampion{
 
     public Garen(String name, int level, int attackDamage, int defense, int hp, int mp) {
         super(name, level, attackDamage, defense, hp, mp);
+
+        setCriticalChance(20);
     }
+
+
 
     @Override
     public void useQ(Champion target) {
@@ -44,5 +48,15 @@ public class Garen extends Champion {
         UpAttackDamage(5);
         UpHp(30);
         System.out.println("가렌 공격력 5, 체력 30 증가!");
+    }
+
+    @Override
+    public void meleeAttack() {
+        System.out.println(getName() + "이(가) 앞점멸 공격!");
+    }
+
+    @Override
+    public void upDefense() {
+        System.out.println(getName() + "이(가) 방어 자세! 방어력 증가!");
     }
 }
