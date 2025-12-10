@@ -7,6 +7,8 @@ public abstract class Champion {
     private int hp;
     private int mp;
 
+    private boolean isDead = false;
+
     public Champion(String name, int level, int attackDamage, int defense, int hp, int mp) {
         this.name = name;
         this.level = level;
@@ -16,17 +18,34 @@ public abstract class Champion {
         this.mp = mp;
     }
 
+    protected boolean canAct() {
+        if (isDead) {
+            System.out.println(name + "은(는) 사망하여 행동할 수 없습니다.");
+            return false;
+        }
+        return true;
+    }
+
     public void takeDamage(int damage) {
         int actualDamage = damage - defense;
         if(actualDamage < 0) actualDamage = 0;
 
         hp -= actualDamage;
-        System.out.println(name + "이(가)" + actualDamage + "피해를 입었습니다.");
+        System.out.println(name + "이(가) " + actualDamage + "피해를 입었습니다.");
 
+        if (hp <= 0) {
+            System.out.println(name + " 사망!");
+            isDead = true; // <- 사망
+        } else {
+            System.out.println("hp가 " + hp + "남았습니다.");
+        }
     }
 
     // 챔피언이 챔피언을 공격한다
     public void basicAttack(Champion target) {
+
+        if (!canAct()) return;
+
         System.out.println(getName() + " -> " + target.getName() + "평타 공격!");
         target.takeDamage(attackDamage);
     }
@@ -46,6 +65,11 @@ public abstract class Champion {
     public abstract void useE(Champion target);
     public abstract void useR(Champion target);
 
+    public void levelUp() {
+        level += 1;
+        System.out.println(name + "이(가) 레벨업! 현재 레벨: " + level);
+    }
+
 
     public String getName() {
         return name;
@@ -58,5 +82,16 @@ public abstract class Champion {
     }
     public int getAttackDamage(){
         return attackDamage;
+    }
+
+
+    public void UpAttackDamage(int amount) {
+        this.attackDamage += amount;
+    }
+    public void UpHp(int amount) {
+        this.hp += amount;
+    }
+    public void UpMp(int amount) {
+        this.mp += amount;
     }
 }

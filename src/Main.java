@@ -26,5 +26,8 @@ public class Main {
         System.out.println("===== 전투 종료 =====");
         System.out.println("가렌 남은 체력: " + garen.getHp());
         System.out.println("애쉬 남은 체력: " + ash.getHp());
+
+        ash.useE(garen);
+        ash.basicAttack(garen);
     }
 }
