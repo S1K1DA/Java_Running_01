@@ -14,6 +14,15 @@ public class Katarina extends Champion implements MeleeChampion{
     }
 
     @Override
+    protected int getBaseHp() {
+        return GameConstants.KATARINA_HP;
+    }
+    @Override
+    protected int getBaseMp() {
+        return GameConstants.KATARINA_MP;
+    }
+
+    @Override
     public void useQ(Champion target) {
         if (!canAct()) return;
         useMp(20);

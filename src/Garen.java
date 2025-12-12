@@ -13,6 +13,15 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
         setCriticalChance(GameConstants.GAREN_CRITICAL);
     }
 
+    @Override
+    protected int getBaseHp() {
+        return GameConstants.GAREN_HP;
+    }
+    @Override
+    protected int getBaseMp() {
+        return GameConstants.GAREN_MP;
+    }
+
 
 
     @Override

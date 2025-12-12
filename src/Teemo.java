@@ -14,6 +14,15 @@ public class Teemo extends Champion implements RangedChampion {
     }
 
     @Override
+    protected int getBaseHp() {
+        return GameConstants.TEEMO_HP;
+    }
+    @Override
+    protected int getBaseMp() {
+        return GameConstants.TEEMO_MP;
+    }
+
+    @Override
     public void useQ(Champion target) {
         if (!canAct()) return;
         useMp(20);

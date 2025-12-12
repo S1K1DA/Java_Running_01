@@ -14,6 +14,15 @@ public class Ash extends Champion implements RangedChampion {
     }
 
     @Override
+    protected int getBaseHp() {
+        return GameConstants.ASHE_HP;
+    }
+    @Override
+    protected int getBaseMp() {
+        return GameConstants.ASHE_MP;
+    }
+
+    @Override
     public void useQ(Champion target) {
         if (!canAct()) return;
         useMp(20);

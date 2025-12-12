@@ -9,13 +9,6 @@ public abstract class Champion {
     private int hp;
     private int mp;
 
-    // 배틀 카운트
-    private static int battleCount = 0;
-
-    protected static void  upBattleCount() {
-        battleCount++;
-    }
-
     // 기본 치명타 확률
     private int criticalChance = 10;
 
@@ -31,6 +24,14 @@ public abstract class Champion {
         this.mp = mp;
     }
 
+    // 배틀 카운트
+    private static int battleCount = 0;
+
+    protected static void  upBattleCount() {
+        battleCount++;
+    }
+
+    // 사망 행동 제한
     protected boolean canAct() {
         if (isDead) {
             System.out.println(name + "은(는) 사망하여 행동할 수 없습니다.");
@@ -39,8 +40,33 @@ public abstract class Champion {
         return true;
     }
 
+    // 부활
+    public final void resurrect() {
+        if (!isDead) {
+            System.out.println(name + "은(는) 아직 살아있어서 부활을 할 수 없습니다.");
+            return;
+        }
+
+        // 모든 챔피언 부활하면 20%
+        int resurrectHp = (int)(getBaseHp() * 0.2);
+        int resurrectMp = (int)(getBaseMp() * 0.2);
+
+        this.hp = resurrectHp;
+        this.mp = resurrectMp;
+
+        this.isDead = false;
+
+        System.out.println(name + "이(가) 부활했습니다!!");
+    }
+
     // 받은 대미지
     public void takeDamage(int damage) {
+
+        if (isDead) {
+            System.out.println(name + "은(는) 이미 사망한 상태입니다!");
+            return;
+        }
+
         int actualDamage = damage - defense;
         if(actualDamage < 0) actualDamage = 0;
 
@@ -48,6 +74,7 @@ public abstract class Champion {
         System.out.println(name + "이(가) " + actualDamage + "피해를 입었습니다.");
 
         if (hp <= 0) {
+            hp = 0;
             System.out.println(name + " 사망!");
             isDead = true; // <- 사망
         } else {
@@ -91,6 +118,9 @@ public abstract class Champion {
     public abstract void useW(Champion target);
     public abstract void useE(Champion target);
     public abstract void useR(Champion target);
+
+    protected abstract int getBaseHp();
+    protected abstract int getBaseMp();
 
     public void levelUp() {
         level += 1;
