@@ -34,7 +34,7 @@ public abstract class Champion {
     // 사망 행동 제한
     protected boolean canAct() {
         if (isDead) {
-            System.out.println(name + "은(는) 사망하여 행동할 수 없습니다.");
+            Log.info(name + "은(는) 사망하여 행동을 못합니다.");
             return false;
         }
         return true;
@@ -43,7 +43,12 @@ public abstract class Champion {
     // 부활
     public final void resurrect() {
         if (!isDead) {
-            System.out.println(name + "은(는) 아직 살아있어서 부활을 할 수 없습니다.");
+            Log.info(name + "은(는) 살아있어 부활할 수 없습니다.");
+            return;
+        }
+
+        if (!canResurrect()) {
+            Log.info(name + "은(는) 부활 조건을 만족하지 못합니다.");
             return;
         }
 
@@ -56,14 +61,14 @@ public abstract class Champion {
 
         this.isDead = false;
 
-        System.out.println(name + "이(가) 부활했습니다!!");
+        Log.resurrect(name);
     }
 
     // 받은 대미지
     public void takeDamage(int damage) {
 
         if (isDead) {
-            System.out.println(name + "은(는) 이미 사망한 상태입니다!");
+            Log.info(name + "은(는) 이미 사망한 상태입니다.");
             return;
         }
 
@@ -71,14 +76,14 @@ public abstract class Champion {
         if(actualDamage < 0) actualDamage = 0;
 
         hp -= actualDamage;
-        System.out.println(name + "이(가) " + actualDamage + "피해를 입었습니다.");
+        Log.damage(name, actualDamage);
 
         if (hp <= 0) {
             hp = 0;
-            System.out.println(name + " 사망!");
+            Log.death(name);
             isDead = true; // <- 사망
         } else {
-            System.out.println("hp가 " + hp + "남았습니다.");
+            Log.info(name + " 현재 HP: " + hp);
         }
     }
 
@@ -86,7 +91,7 @@ public abstract class Champion {
         int damage = attackDamage;
 
         if(rand.nextInt(100) < criticalChance) {
-            System.out.println("치명타가 발생했습니다!!");
+            Log.info(name + " 치명타 발생!");
             damage *= 2;
         }
         return damage;
@@ -100,17 +105,17 @@ public abstract class Champion {
 
         int damage = criticalDamage();
 
-        System.out.println(getName() + " -> " + target.getName() + "평타 공격!");
+        Log.skill(name, "기본 공격");
         target.takeDamage(damage);
     }
 
     public void useMp(int amount) {
         if (mp < amount) {
-            System.out.println(name + "의 MP가 부족합니다! 스킬을 사용할 수 없습니다.");
+            Log.info(name + "의 MP가 부족해 스킬을 사용할 수 없습니다!");
             return;
         }
         mp -= amount;
-        System.out.println(name + "의 MP가 " + amount + " 감소했습니다. (현재 MP: " + mp + ")");
+        Log.info(name + "의 MP -" + amount + " (현재 MP: " + mp + ")");
     }
 
     // 공통의 QWER 스킬
@@ -119,12 +124,14 @@ public abstract class Champion {
     public abstract void useE(Champion target);
     public abstract void useR(Champion target);
 
+    public abstract boolean canResurrect();
+
     protected abstract int getBaseHp();
     protected abstract int getBaseMp();
 
     public void levelUp() {
         level += 1;
-        System.out.println(name + "이(가) 레벨업! 현재 레벨: " + level);
+        Log.info(name + " 레벨업! 현재 레벨: " + level);
     }
 
 
@@ -158,5 +165,28 @@ public abstract class Champion {
     }
     public void setCriticalChance(int criticalChance) {
         this.criticalChance = criticalChance;
+    }
+
+    public static class Log {
+
+        public static void info(String message) {
+            System.out.println("[INFO] " + message);
+        }
+
+        public static void skill(String caster, String skillName) {
+            System.out.println("[SKILL] " + caster + " → " + skillName);
+        }
+
+        public static void damage(String target, int damage) {
+            System.out.println("[DMG] " + target + "이(가) " + damage + " 피해를 받음");
+        }
+
+        public static void death(String target) {
+            System.out.println("[DEATH] " + target + " 사망!");
+        }
+
+        public static void resurrect(String target) {
+            System.out.println("[REVIVE] " + target + " 부활!");
+        }
     }
 }

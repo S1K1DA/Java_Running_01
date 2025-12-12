@@ -1,5 +1,8 @@
 public class Katarina extends Champion implements MeleeChampion{
 
+    private int resurrectCount = 0;
+    private static final int MAX_RESURRECT = 2;
+
     public Katarina(String name) {
         super(
                 name,
@@ -20,6 +23,16 @@ public class Katarina extends Champion implements MeleeChampion{
     @Override
     protected int getBaseMp() {
         return GameConstants.KATARINA_MP;
+    }
+
+    // 2회 부활 제한
+    @Override
+    public boolean canResurrect() {
+        if (resurrectCount >= MAX_RESURRECT) {
+            return false;
+        }
+        resurrectCount++;
+        return true;
     }
 
     @Override

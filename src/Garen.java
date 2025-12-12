@@ -1,5 +1,8 @@
 public class Garen extends Champion implements MeleeChampion, TankChampion{
 
+    private int resurrectCount = 0;
+    private static final int MAX_RESURRECT = 1;
+
     public Garen(String name) {
         super(
                 name,
@@ -22,14 +25,22 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
         return GameConstants.GAREN_MP;
     }
 
-
+    // 1회 부활 제한
+    @Override
+    public boolean canResurrect() {
+        if (resurrectCount >= MAX_RESURRECT) {
+            return false;
+        }
+        resurrectCount++;
+        return true;
+    }
 
     @Override
     public void useQ(Champion target) {
         if (!canAct()) return;
         useMp(20);
         upBattleCount();
-        System.out.println(getName() + "(Q): 결정타!");
+        Log.skill(getName(), "Q - 결정타!");
         target.takeDamage(getAttackDamage() + 20);
     }
 
@@ -38,8 +49,9 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
         if (!canAct()) return;
         useMp(10);
         upBattleCount();
-        System.out.println(getName() + "(W): 용기! 가렌의 방어력이 증가합니다!");
-        System.out.println("가렌이 잠시 피해를 덜 받습니다!");
+        Log.skill(getName(), "(W): 용기! 가렌의 방어력이 증가합니다!");
+        Log.info("가렌이 잠시 피해를 덜 받습니다!");
+
     }
 
     @Override
@@ -47,7 +59,7 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
         if (!canAct()) return;
         useMp(30);
         upBattleCount();
-        System.out.println(getName() + "(E): 심판!");
+        Log.skill(getName(), "(E): 심판!");
         target.takeDamage(getAttackDamage() + 10);
         target.takeDamage(getAttackDamage() + 10);
         target.takeDamage(getAttackDamage() + 10);
@@ -58,7 +70,7 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
         if (!canAct()) return;
         useMp(50);
         upBattleCount();
-        System.out.println(getName() + "(R): 데마시아!!!");
+        Log.skill(getName(), "(R): 데마시아!!");
         target.takeDamage(getAttackDamage() + 50);
     }
 
@@ -67,18 +79,18 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
         super.levelUp();
         UpAttackDamage(5);
         UpHp(30);
-        System.out.println("가렌 공격력 5, 체력 30 증가!");
+        Log.info("가렌의 공격력 5 , 체력 30 증가!");
     }
 
     @Override
     public void meleeAttack() {
         upBattleCount();
-        System.out.println(getName() + "이(가) 앞점멸 공격!");
+        Log.skill(getName(), ": 앞점멸 평타!!!");
     }
 
     @Override
     public void upDefense() {
         upBattleCount();
-        System.out.println(getName() + "이(가) 방어 자세! 방어력 증가!");
+        Log.skill(getName(), "이(가) 방어 자세! 방어력 증가!");
     }
 }

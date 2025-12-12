@@ -47,5 +47,21 @@ public class Main {
         // 6. 전투 횟수 출력
         System.out.println("===== 전투 종료 =====");
         System.out.println("총 전투 횟수(battleCount): " + Champion.getBattleCount());
+
+        // 가렌 부활 테스트
+        garen.takeDamage(9999);
+        System.out.println("가렌 현재 HP: " + garen.getHp());
+        // 가렌 부활후 또죽이기!
+        garen.resurrect();
+        garen.takeDamage(9999);
+        garen.resurrect();
+
+        // 애쉬 부활 테스트
+        ashe.takeDamage(9999);
+        System.out.println("애쉬 현재 HP: " + ashe.getHp());
+
+        ashe.resurrect();
+        ashe.takeDamage(9999);
+        ashe.resurrect();
     }
 }

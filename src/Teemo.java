@@ -1,5 +1,8 @@
 public class Teemo extends Champion implements RangedChampion {
 
+    private int resurrectCount = 0;
+    private static final int MAX_RESURRECT = 2;
+
     public Teemo(String name) {
         super(
                 name,
@@ -20,6 +23,16 @@ public class Teemo extends Champion implements RangedChampion {
     @Override
     protected int getBaseMp() {
         return GameConstants.TEEMO_MP;
+    }
+
+    // 2회 부활 제한
+    @Override
+    public boolean canResurrect() {
+        if (resurrectCount >= MAX_RESURRECT) {
+            return false;
+        }
+        resurrectCount++;
+        return true;
     }
 
     @Override
