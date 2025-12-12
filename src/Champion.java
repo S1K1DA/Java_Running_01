@@ -9,6 +9,13 @@ public abstract class Champion {
     private int hp;
     private int mp;
 
+    // 배틀 카운트
+    private static int battleCount = 0;
+
+    protected static void  upBattleCount() {
+        battleCount++;
+    }
+
     // 기본 치명타 확률
     private int criticalChance = 10;
 
@@ -17,7 +24,7 @@ public abstract class Champion {
 
     public Champion(String name, int level, int attackDamage, int defense, int hp, int mp) {
         this.name = name;
-        this.level = level;
+        this.level = 1;
         this.attackDamage = attackDamage;
         this.defense = defense;
         this.hp = hp;
@@ -62,6 +69,7 @@ public abstract class Champion {
     public void basicAttack(Champion target) {
 
         if (!canAct()) return;
+        upBattleCount();
 
         int damage = criticalDamage();
 
@@ -102,6 +110,11 @@ public abstract class Champion {
     public int getAttackDamage(){
         return attackDamage;
     }
+
+    public static int getBattleCount() {
+        return battleCount;
+    }
+
 
 
     public void UpAttackDamage(int amount) {

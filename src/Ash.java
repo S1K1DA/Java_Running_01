@@ -1,15 +1,23 @@
 public class Ash extends Champion implements RangedChampion {
 
-    public Ash(String name, int level, int attackDamage, int defense, int hp, int mp) {
-        super(name, level, attackDamage, defense, hp, mp);
+    public Ash(String name) {
+        super(
+                name,
+                1,
+                GameConstants.ASHE_AD,
+                GameConstants.ASHE_DEF,
+                GameConstants.ASHE_HP,
+                GameConstants.ASHE_MP
+        );
 
-        setCriticalChance(30);
+        setCriticalChance(GameConstants.ASHE_CRITICAL);
     }
 
     @Override
     public void useQ(Champion target) {
         if (!canAct()) return;
         useMp(20);
+        upBattleCount();
         System.out.println(getName() + "(Q): 궁사의 집중!");
         target.takeDamage(getAttackDamage() + 20);
     }
@@ -17,6 +25,7 @@ public class Ash extends Champion implements RangedChampion {
     public void useW(Champion target) {
         if (!canAct()) return;
         useMp(30);
+        upBattleCount();
         System.out.println(getName() + "(W): 일제 사격!");
         target.takeDamage(getAttackDamage() + 30);
     }
@@ -24,12 +33,14 @@ public class Ash extends Champion implements RangedChampion {
     public void useE(Champion target) {
         if (!canAct()) return;
         useMp(15);
+        upBattleCount();
         System.out.println(getName() + "(E): 매 날리기~");
     }
     @Override
     public void useR(Champion target) {
         if (!canAct()) return;
         useMp(50);
+        upBattleCount();
         System.out.println(getName() + "(R): 마법의 수정화살!!!");
         target.takeDamage(getAttackDamage() + 50);
     }
@@ -44,6 +55,7 @@ public class Ash extends Champion implements RangedChampion {
 
     @Override
     public void rangedAttack() {
+        upBattleCount();
         System.out.println(getName() + "이(가) 뒷점멸 공격!");
     }
 }

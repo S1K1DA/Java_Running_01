@@ -1,9 +1,16 @@
 public class Garen extends Champion implements MeleeChampion, TankChampion{
 
-    public Garen(String name, int level, int attackDamage, int defense, int hp, int mp) {
-        super(name, level, attackDamage, defense, hp, mp);
+    public Garen(String name) {
+        super(
+                name,
+                1,
+                GameConstants.GAREN_AD,
+                GameConstants.GAREN_DEF,
+                GameConstants.GAREN_HP,
+                GameConstants.GAREN_MP
+        );
 
-        setCriticalChance(20);
+        setCriticalChance(GameConstants.GAREN_CRITICAL);
     }
 
 
@@ -12,6 +19,7 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
     public void useQ(Champion target) {
         if (!canAct()) return;
         useMp(20);
+        upBattleCount();
         System.out.println(getName() + "(Q): 결정타!");
         target.takeDamage(getAttackDamage() + 20);
     }
@@ -20,6 +28,7 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
     public void useW(Champion target) {
         if (!canAct()) return;
         useMp(10);
+        upBattleCount();
         System.out.println(getName() + "(W): 용기! 가렌의 방어력이 증가합니다!");
         System.out.println("가렌이 잠시 피해를 덜 받습니다!");
     }
@@ -28,6 +37,7 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
     public void useE(Champion target) {
         if (!canAct()) return;
         useMp(30);
+        upBattleCount();
         System.out.println(getName() + "(E): 심판!");
         target.takeDamage(getAttackDamage() + 10);
         target.takeDamage(getAttackDamage() + 10);
@@ -38,6 +48,7 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
     public void useR(Champion target) {
         if (!canAct()) return;
         useMp(50);
+        upBattleCount();
         System.out.println(getName() + "(R): 데마시아!!!");
         target.takeDamage(getAttackDamage() + 50);
     }
@@ -52,11 +63,13 @@ public class Garen extends Champion implements MeleeChampion, TankChampion{
 
     @Override
     public void meleeAttack() {
+        upBattleCount();
         System.out.println(getName() + "이(가) 앞점멸 공격!");
     }
 
     @Override
     public void upDefense() {
+        upBattleCount();
         System.out.println(getName() + "이(가) 방어 자세! 방어력 증가!");
     }
 }

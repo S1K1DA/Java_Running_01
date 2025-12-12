@@ -1,15 +1,23 @@
 public class Teemo extends Champion implements RangedChampion {
-    public Teemo(String name, int level, int attackDamage, int defense, int hp, int mp) {
-        super(name, level, attackDamage, defense, hp, mp);
 
-        setCriticalChance(15);
+    public Teemo(String name) {
+        super(
+                name,
+                1,
+                GameConstants.TEEMO_AD,
+                GameConstants.TEEMO_DEF,
+                GameConstants.TEEMO_HP,
+                GameConstants.TEEMO_MP
+        );
+
+        setCriticalChance(GameConstants.TEEMO_CRITICAL);
     }
 
     @Override
     public void useQ(Champion target) {
         if (!canAct()) return;
-
         useMp(20);
+        upBattleCount();
         System.out.println(getName() + "(Q): 실명 다트!!");
         target.takeDamage(getAttackDamage() + 15);
         System.out.println(target.getName() + "이(가) 잠시 실명 상태가 됩니다!");
@@ -18,8 +26,8 @@ public class Teemo extends Champion implements RangedChampion {
     @Override
     public void useW(Champion target) {
         if (!canAct()) return;
-
         useMp(15);
+        upBattleCount();
         System.out.println(getName() + "(W): 신속한 이동!");
         System.out.println(getName() + "의 이동 속도가 잠시 증가합니다!");
     }
@@ -27,8 +35,8 @@ public class Teemo extends Champion implements RangedChampion {
     @Override
     public void useE(Champion target) {
         if (!canAct()) return;
-
         useMp(25);
+        upBattleCount();
         System.out.println(getName() + "(E): 독침!");
         target.takeDamage(getAttackDamage() + 10);
 
@@ -41,8 +49,8 @@ public class Teemo extends Champion implements RangedChampion {
     @Override
     public void useR(Champion target) {
         if (!canAct()) return;
-
         useMp(50);
+        upBattleCount();
         System.out.println(getName() + "(R): 유독성 함정!!!");
         target.takeDamage(getAttackDamage() + 20);
         target.takeDamage(getAttackDamage() + 20);
@@ -60,6 +68,7 @@ public class Teemo extends Champion implements RangedChampion {
 
     @Override
     public void rangedAttack() {
+        upBattleCount();
         System.out.println(getName() + "이(가) 멀리서 빠르게 화살을 발사합니다!");
     }
 }
