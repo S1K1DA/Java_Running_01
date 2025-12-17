@@ -1,4 +1,9 @@
-public class Katarina extends Champion implements MeleeChampion{
+package champion;
+
+import champion.roles.MeleeChampion;
+import config.GameConstants;
+
+public class Katarina extends Champion implements MeleeChampion {
 
     private int resurrectCount = 0;
     private static final int MAX_RESURRECT = 2;
@@ -39,7 +44,7 @@ public class Katarina extends Champion implements MeleeChampion{
     public void useQ(Champion target) {
         if (!canAct()) return;
         useMp(20);
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "(Q): 단검 투척!");
         target.takeDamage(getAttackDamage() + 20);
     }
@@ -48,7 +53,7 @@ public class Katarina extends Champion implements MeleeChampion{
     public void useW(Champion target) {
         if (!canAct()) return;
         useMp(10);
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "(W): 용기! 카타리나의 이동속도가 증가합니다!");
     }
 
@@ -56,7 +61,7 @@ public class Katarina extends Champion implements MeleeChampion{
     public void useE(Champion target) {
         if (!canAct()) return;
         useMp(30);
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "(E): 순보!");
         target.takeDamage(getAttackDamage() + 5);
     }
@@ -65,7 +70,7 @@ public class Katarina extends Champion implements MeleeChampion{
     public void useR(Champion target) {
         if (!canAct()) return;
         useMp(50);
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "(R): 죽음의 연꽃!!!");
         target.takeDamage(getAttackDamage() + 10);
         target.takeDamage(getAttackDamage() + 10);
@@ -83,7 +88,7 @@ public class Katarina extends Champion implements MeleeChampion{
 
     @Override
     public void meleeAttack() {
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "이(가) 앞점멸 공격!");
     }
 }

@@ -1,3 +1,8 @@
+package champion;
+
+import champion.roles.RangedChampion;
+import config.GameConstants;
+
 public class Ash extends Champion implements RangedChampion {
 
     private int resurrectCount = 0;
@@ -39,7 +44,7 @@ public class Ash extends Champion implements RangedChampion {
     public void useQ(Champion target) {
         if (!canAct()) return;
         useMp(20);
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "(Q): 궁사의 집중!");
         target.takeDamage(getAttackDamage() + 20);
     }
@@ -47,7 +52,7 @@ public class Ash extends Champion implements RangedChampion {
     public void useW(Champion target) {
         if (!canAct()) return;
         useMp(30);
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "(W): 일제 사격!");
         target.takeDamage(getAttackDamage() + 30);
     }
@@ -55,14 +60,14 @@ public class Ash extends Champion implements RangedChampion {
     public void useE(Champion target) {
         if (!canAct()) return;
         useMp(15);
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "(E): 매 날리기~");
     }
     @Override
     public void useR(Champion target) {
         if (!canAct()) return;
         useMp(50);
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "(R): 마법의 수정화살!!!");
         target.takeDamage(getAttackDamage() + 50);
     }
@@ -77,7 +82,7 @@ public class Ash extends Champion implements RangedChampion {
 
     @Override
     public void rangedAttack() {
-        upBattleCount();
+        Champion.upBattleCount();
         System.out.println(getName() + "이(가) 뒷점멸 공격!");
     }
 }

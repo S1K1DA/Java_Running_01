@@ -1,3 +1,5 @@
+package config;
+
 public final class GameConstants {
 
     // 가렌 기본 스텟
